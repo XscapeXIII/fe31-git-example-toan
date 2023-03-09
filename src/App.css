@@ -90,6 +90,14 @@
 .sub-nav-item:hover {
   background-color: yellow;
 }
+.product-item {
+  border: solid 1px rebeccapurple;
+  height: 250px;
+  width: 250px;
+  justify-content: space-between;
+  background-color: bisque;
+  align-items: center;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
