@@ -1,11 +1,8 @@
 import { useState } from "react";
 // import React from "react";
-function Main() {
+function Main({ isShowSidebar }) {
+  const [count, setCount] = useState(0);
   const [value, setValue] = useState("");
-  const handleInput = (e) => {
-    setValue(e.target.value);
-  };
-
   const [productList, setProductList] = useState([
     {
       name: "iPhone 14",
@@ -23,6 +20,18 @@ function Main() {
 
   const handleBuyProduct = (e, name) => {
     console.log(e.target);
+    console.log(`buy ${name}`);
+  };
+
+  const handleChangeSearchkey = (e) => {
+    setValue(e.target.value);
+  };
+
+  const handlePlus = () => {
+    setCount(count + 1);
+  };
+  const handleMinus = () => {
+    setCount(count - 1);
   };
 
   const handleAddProduct = () => {
@@ -46,12 +55,14 @@ function Main() {
       );
     });
   };
-  console.log(productList);
 
   return (
-    <div className="main">
+    <div className={isShowSidebar ? "main" : "main full"}>
+      <button onClick={() => handlePlus()}>+</button>
+      <h3>{count}</h3>
+      <button onClick={() => handleMinus()}>-</button>
       <div>
-        <input type="text" onChange={(e) => handleInput(e)} />
+        <input type="searchkey" onChange={(e) => handleChangeSearchkey(e)} />
         <p>{value}</p>
       </div>
       <div>{renderProductList()}</div>

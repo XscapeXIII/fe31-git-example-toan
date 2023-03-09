@@ -1,15 +1,23 @@
-import logo from "./logo.svg";
+import { useState } from "react";
 import "./App.css";
 import Main from "./Main";
 import Header from "./Header";
 import Footer from "./Footer";
+import Sidebar from "./Sidebar";
 
 function App() {
-  const name = "hello test git";
+  const [isShowSidebar, setIsShowSidebar] = useState(true);
+
   return (
     <div className="wrapper">
-      <Header />
-      <Main />
+      <Header
+        isShowSidebar={isShowSidebar}
+        setIsShowSidebar={setIsShowSidebar}
+      />
+      <div className="container">
+        <Sidebar isShowSidebar={isShowSidebar} />
+        <Main isShowSidebar={isShowSidebar} />
+      </div>
       <Footer />
     </div>
   );
