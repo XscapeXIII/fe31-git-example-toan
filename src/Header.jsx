@@ -3,13 +3,9 @@ import { useState } from "react";
 function Header(props) {
   const { setIsShowSidebar, isShowSidebar } = props;
 
-  const handleToggeSidebar = () => {
-    setIsShowSidebar(!isShowSidebar);
-  };
-
   return (
     <div className="header">
-      <button onClick={() => handleToggeSidebar()}>Menu</button>
+      <button onClick={() => setIsShowSidebar(!isShowSidebar)}>Menu</button>
       <a href="trang-home.html">
         <h3>Logo</h3>
       </a>

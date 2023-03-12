@@ -18,6 +18,23 @@ function Main({ isShowSidebar }) {
     },
   ]);
 
+  const [productData, setProductData] = useState({
+    name: "",
+    price: "",
+  });
+
+  const [productError, setProductError] = useState({
+    name: "",
+    price: "",
+  });
+
+  const handleChangeProductData = (e, key) => {
+    setProductData({
+      ...productData,
+      [key]: e.target.value,
+    });
+  };
+
   const handleBuyProduct = (e, name) => {
     console.log(e.target);
     console.log(`buy ${name}`);
@@ -35,13 +52,46 @@ function Main({ isShowSidebar }) {
   };
 
   const handleAddProduct = () => {
-    setProductList([
-      ...productList,
-      {
-        name: "samsung",
-        price: 1212,
-      },
-    ]);
+    //TRONG REACT KO THỂ SÉT 2 STATE GIỐNG NHAU TRỞ LÊN TRONG CÙNG 1 FUNCTION
+    //NÊN CHÚNG TA TẠO RA 1 OBJ TRUNG GIAN LÀ errors
+    let isValid = true;
+    const onlyNumberRegEx = /^[0-9]/g;
+    const errors = {
+      name: "",
+      price: "",
+    };
+
+    if (!productData.name) {
+      errors.name = "Name is require";
+      isValid = false;
+    } else {
+      errors.name = "";
+    }
+
+    if (!productData.price) {
+      errors.price = "Price is require";
+      isValid = false;
+    } else if (!onlyNumberRegEx.test(productData.price)) {
+      errors.price = "Price must be number";
+      isValid = false;
+    } else {
+      errors.price = "";
+    }
+
+    if (isValid) {
+      setProductList([
+        ...productList,
+        {
+          name: productData.name,
+          price: parseInt(productData.price),
+        },
+      ]);
+      setProductData({
+        name: "",
+        price: "",
+      });
+    }
+    setProductError(errors);
   };
 
   const renderProductList = () => {
@@ -66,6 +116,20 @@ function Main({ isShowSidebar }) {
         <p>{value}</p>
       </div>
       <div>{renderProductList()}</div>
+      <input
+        type="text"
+        placeholder="Product name"
+        onChange={(e) => handleChangeProductData(e, "name")}
+        value={productData.name}
+      />
+      <span>{productError.name}</span>
+      <input
+        type="text"
+        placeholder="Product price"
+        onChange={(e) => handleChangeProductData(e, "price")}
+        value={productData.price}
+      />
+      <span>{productError.price}</span>
       <button onClick={() => handleAddProduct()}>Add Product</button>
     </div>
   );
