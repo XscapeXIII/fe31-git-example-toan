@@ -1,13 +1,20 @@
 import { useState } from "react";
+import * as S from "./styles";
 
 function Header(props) {
   const { setIsShowSidebar, isShowSidebar } = props;
 
   return (
     <div className="header">
-      <button onClick={() => setIsShowSidebar(!isShowSidebar)}>Menu</button>
+      <S.Button
+        type="primary"
+        width="75px"
+        onClick={() => setIsShowSidebar(!isShowSidebar)}
+      >
+        Menu
+      </S.Button>
       <a href="trang-home.html">
-        <h3>Logo</h3>
+        <S.Title>Logo</S.Title>
       </a>
       <div class="nav-link">
         <div class="nav-link-item">

@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { Input } from "antd";
+import { Button, Space } from "antd";
+import * as S from "./styles";
 // import React from "react";
 function Main({ isShowSidebar }) {
   const [count, setCount] = useState(0);
@@ -107,31 +110,33 @@ function Main({ isShowSidebar }) {
   };
 
   return (
-    <div className={isShowSidebar ? "main" : "main full"}>
-      <button onClick={() => handlePlus()}>+</button>
+    <S.MainWrapper isFull={!isShowSidebar}>
+      <Button onClick={() => handlePlus()}>+</Button>
       <h3>{count}</h3>
-      <button onClick={() => handleMinus()}>-</button>
+      <Button onClick={() => handleMinus()}>-</Button>
       <div>
-        <input type="searchkey" onChange={(e) => handleChangeSearchkey(e)} />
+        <Input type="searchkey" onChange={(e) => handleChangeSearchkey(e)} />
         <p>{value}</p>
       </div>
       <div>{renderProductList()}</div>
-      <input
+      <Input
         type="text"
         placeholder="Product name"
         onChange={(e) => handleChangeProductData(e, "name")}
         value={productData.name}
       />
       <span>{productError.name}</span>
-      <input
+      <Input
         type="text"
         placeholder="Product price"
         onChange={(e) => handleChangeProductData(e, "price")}
         value={productData.price}
       />
       <span>{productError.price}</span>
-      <button onClick={() => handleAddProduct()}>Add Product</button>
-    </div>
+      <Button size="large" type="primary" onClick={() => handleAddProduct()}>
+        Add Product
+      </Button>
+    </S.MainWrapper>
   );
 }
 export default Main;

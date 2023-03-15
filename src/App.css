@@ -110,17 +110,7 @@
   display: flex;
   position: relative;
 }
-.sidebar {
-  position: absolute;
-  margin-top: 56px;
-  left: -300px;
-  padding: 16px;
-  width: 300px;
-  height: 100%;
-  background-color: aqua;
-  overflow: hidden;
-  transition: all 0.4s;
-}
+
 .sidebar.show {
   left: 0;
 }
