@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { Input } from "antd";
+import { Button, Space } from "antd";
 
 export const MainWrapper = styled.div`
   flex: 1;
@@ -6,11 +8,16 @@ export const MainWrapper = styled.div`
   padding: 16px;
   margin-left: 300px;
   transition: all 0.4s;
-  background-color: rgb(10, 114, 62);
+  background-color: rgb(166, 219, 192);
 
   ${(props) =>
     props.isFull &&
     `
   margin-left: 0;
   `}
+`;
+
+export const CustomInput = styled(Input)`
+  border-radius: 20px;
+  width: 200px;
 `;

@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import { Input } from "antd";
-import { Button, Space } from "antd";
+import { Button, Space, Card, Row, Col } from "antd";
 import * as S from "./styles";
 // import React from "react";
 function Main({ isShowSidebar }) {
@@ -14,6 +14,18 @@ function Main({ isShowSidebar }) {
     {
       name: "iPhone 14 Pro",
       price: 1999,
+    },
+    {
+      name: "iPhone 15",
+      price: 2999,
+    },
+    {
+      name: "iPhone 15",
+      price: 2999,
+    },
+    {
+      name: "iPhone 15",
+      price: 2999,
     },
     {
       name: "iPhone 15",
@@ -100,11 +112,12 @@ function Main({ isShowSidebar }) {
   const renderProductList = () => {
     return productList.map((item, index) => {
       return (
-        <div key={index} className="product-item">
-          <h2>${item.name}</h2>
-          <h3>${item.price}</h3>
-          <button onClick={(e) => handleBuyProduct(e, item.name)}>Buy</button>
-        </div>
+        <Col key={index} xs={24} md={12} xl={8}>
+          <Card title={item.name} size="small">
+            <h3>${item.price}</h3>
+            <button onClick={(e) => handleBuyProduct(e, item.name)}>Buy</button>
+          </Card>
+        </Col>
       );
     });
   };
@@ -115,10 +128,15 @@ function Main({ isShowSidebar }) {
       <h3>{count}</h3>
       <Button onClick={() => handleMinus()}>-</Button>
       <div>
-        <Input type="searchkey" onChange={(e) => handleChangeSearchkey(e)} />
+        <S.CustomInput
+          size="large"
+          style={{ width: 150 }}
+          type="searchkey"
+          onChange={(e) => handleChangeSearchkey(e)}
+        />
         <p>{value}</p>
       </div>
-      <div>{renderProductList()}</div>
+      <Row gutter={[16, 16]}>{renderProductList()}</Row>
       <Input
         type="text"
         placeholder="Product name"
