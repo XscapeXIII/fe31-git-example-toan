@@ -2,9 +2,9 @@ import { useState, Fragment } from "react";
 import { Input } from "antd";
 import { Button, Card, Row, Col } from "antd";
 import * as S from "./styles";
-import { dark, light } from "../themes";
+import { dark, light } from "../../themes";
 
-function Main({ isShowSidebar }) {
+function HomeWrapper() {
   const [count, setCount] = useState(0);
   const [value, setValue] = useState("");
   const [productList, setProductList] = useState([
@@ -124,7 +124,7 @@ function Main({ isShowSidebar }) {
   };
 
   return (
-    <S.MainWrapper isFull={!isShowSidebar}>
+    <S.HomeWrapper>
       <Button onClick={() => handlePlus()}>+</Button>
       <h3>{count}</h3>
       <Button onClick={() => handleMinus()}>-</Button>
@@ -155,7 +155,7 @@ function Main({ isShowSidebar }) {
       <Button size="large" type="primary" onClick={() => handleAddProduct()}>
         Add Product
       </Button>
-    </S.MainWrapper>
+    </S.HomeWrapper>
   );
 }
-export default Main;
+export default HomeWrapper;

@@ -2,13 +2,8 @@ import styled from "styled-components";
 import { Input } from "antd";
 import { Button, Space } from "antd";
 
-export const MainWrapper = styled.div`
-  flex: 1;
-  margin-top: 56px;
+export const HomeWrapper = styled.div`
   padding: 16px;
-  margin-left: 300px;
-  transition: all 0.4s;
-  background-color: ${(props) => props.theme.main};
 
   ${(props) =>
     props.isFull &&
