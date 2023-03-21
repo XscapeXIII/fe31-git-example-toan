@@ -1,22 +1,28 @@
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import { ConfigProvider, Button } from "antd";
-// import { QqOutlined, HeartOutlined } from "@ant-design/icons";
+import { ConfigProvider } from "antd";
+
 import { ThemeProvider } from "styled-components";
-import * as S from "./styles";
+
 import "../App.css";
-import Header from "../layouts/Header";
-import Footer from "../layouts/Footer";
-import Sidebar from "../layouts/Sidebar";
-import HomePage from "../pages/Home";
-import AboutPage from "../pages/About";
-import ProductDetailPage from "../pages/ProductDetail";
+
+import AdminLayout from "../layouts/AdminLayout";
+import UserLayout from "../layouts/UserLayout";
+import LoginLayout from "../layouts/LoginLayout";
+
+import Dashboard from "../pages/admin/Dashboard";
+
+import { ROUTES } from "../constants/routes";
+
+import HomePage from "../pages/user/Home";
+import AboutPage from "../pages/user/About";
+import ProductDetailPage from "../pages/user/ProductDetail";
+
 import LoginPage from "../pages/Login";
 
 import { dark, light } from "../themes";
 
 function App() {
-  const [isShowSidebar, setIsShowSidebar] = useState(true);
   const [theme, setTheme] = useState("light");
   return (
     <ConfigProvider
@@ -27,40 +33,22 @@ function App() {
       }}
     >
       <ThemeProvider theme={theme === "light" ? light : dark}>
-        <div className="wrapper">
-          <Header
-            isShowSidebar={isShowSidebar}
-            setIsShowSidebar={setIsShowSidebar}
-          />
-          <div className="container">
-            <Sidebar isShowSidebar={isShowSidebar} />
-            <S.MainWrapper isFull={!isShowSidebar}>
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/about" element={<AboutPage />} />
-                <Route path="/product/:id" element={<ProductDetailPage />} />
-                <Route path="/login" element={<LoginPage />} />
-              </Routes>
-            </S.MainWrapper>
-          </div>
-          {/* <Button
-            type="primary"
-            shape="circle"
-            style={{ fontSize: "120%" }}
-            onClick={() => setTheme("light")}
-          >
-            {<HeartOutlined />}
-          </Button>
-          <Button
-            type="primary"
-            shape="circle"
-            style={{ fontSize: "120%" }}
-            onClick={() => setTheme("dark")}
-          >
-            {<QqOutlined />}
-          </Button> */}
-          <Footer />
-        </div>
+        <Routes>
+          <Route element={<AdminLayout />}>
+            <Route path={ROUTES.ADMIN.DASHBOARD} element={<Dashboard />} />
+          </Route>
+          <Route element={<UserLayout />}>
+            <Route path={ROUTES.USER.HOME} element={<HomePage />} />
+            <Route path={ROUTES.USER.ABOUT} element={<AboutPage />} />
+            <Route
+              path={ROUTES.USER.PRODUCT_DETAIL}
+              element={<ProductDetailPage />}
+            />
+          </Route>
+          <Route element={<LoginLayout />}>
+            <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+          </Route>
+        </Routes>
       </ThemeProvider>
     </ConfigProvider>
   );

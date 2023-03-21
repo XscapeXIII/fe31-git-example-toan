@@ -14,10 +14,6 @@ export const Headerwrapper = styled.div`
   background-color: ${(props) => props.theme.header};
 `;
 
-export const Title = styled.h1`
-  color: palevioletred;
-`;
-
 export const Buttonsidebar = styled.button`
   padding: 4px 8px;
   border: none;

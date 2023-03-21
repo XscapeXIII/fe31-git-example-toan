@@ -1,8 +1,9 @@
-import { useState, Fragment } from "react";
+import { useState } from "react";
+import { Link, generatePath } from "react-router-dom";
 import { Input } from "antd";
 import { Button, Card, Row, Col } from "antd";
 import * as S from "./styles";
-import { dark, light } from "../../themes";
+import { ROUTES } from "../../../constants/routes";
 
 function HomeWrapper() {
   const [count, setCount] = useState(0);
@@ -114,10 +115,16 @@ function HomeWrapper() {
     return productList.map((item, index) => {
       return (
         <Col key={index} xs={24} md={12} xl={8}>
-          <Card title={item.name} size="small">
-            <h3>${item.price}</h3>
-            <button onClick={(e) => handleBuyProduct(e, item.name)}>Buy</button>
-          </Card>
+          <Link
+            to={generatePath(ROUTES.USER.PRODUCT_DETAIL, { id: index + 1 })}
+          >
+            <Card title={item.name} size="small">
+              <h3>${item.price}</h3>
+              <button onClick={(e) => handleBuyProduct(e, item.name)}>
+                Buy
+              </button>
+            </Card>
+          </Link>
         </Col>
       );
     });
