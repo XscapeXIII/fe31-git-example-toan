@@ -4,9 +4,9 @@ import * as S from "./styles";
 
 function AdminHeader() {
   const navigate = useNavigate();
-  const handleLogOut = () => {
+  const handleLogin = () => {
     // window.location.href = "/login";
-    navigate("/login");
+    navigate(ROUTES.LOGIN);
   };
 
   return (
@@ -25,10 +25,8 @@ function AdminHeader() {
         </div>
       </div>
       <div>
-        <button onClick={() => navigate(ROUTES.ADMIN.DASHBOARD)}>
-          Dashboard
-        </button>
-        <button onClick={() => handleLogOut()}>Log Out</button>
+        <button onClick={() => navigate(ROUTES.ADMIN.DASHBOARD)}>ADMIN</button>
+        <button onClick={() => handleLogin()}>Login</button>
       </div>
     </S.Headerwrapper>
   );

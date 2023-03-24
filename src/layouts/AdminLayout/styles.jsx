@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Input } from "antd";
 // import { Button, Space } from "antd";
 
@@ -12,9 +12,9 @@ export const MainWrapper = styled.div`
 
   ${(props) =>
     props.isFull &&
-    `
-  margin-left: 0;
-  `}
+    css`
+      margin-left: 0;
+    `}
 `;
 
 export const CustomInput = styled(Input)`

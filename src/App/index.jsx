@@ -8,9 +8,10 @@ import "../App.css";
 
 import AdminLayout from "../layouts/AdminLayout";
 import UserLayout from "../layouts/UserLayout";
-import LoginLayout from "../layouts/LoginLayout";
+import FormLayout from "../layouts/FormLayout";
 
 import Dashboard from "../pages/admin/Dashboard";
+import TodoList from "../pages/admin/TodoList";
 
 import { ROUTES } from "../constants/routes";
 
@@ -36,6 +37,7 @@ function App() {
         <Routes>
           <Route element={<AdminLayout />}>
             <Route path={ROUTES.ADMIN.DASHBOARD} element={<Dashboard />} />
+            <Route path={ROUTES.ADMIN.TODO_LIST} element={<TodoList />} />
           </Route>
           <Route element={<UserLayout />}>
             <Route path={ROUTES.USER.HOME} element={<HomePage />} />
@@ -45,7 +47,7 @@ function App() {
               element={<ProductDetailPage />}
             />
           </Route>
-          <Route element={<LoginLayout />}>
+          <Route element={<FormLayout />}>
             <Route path={ROUTES.LOGIN} element={<LoginPage />} />
           </Route>
         </Routes>

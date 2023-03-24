@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../constants/routes";
 import * as S from "./styles";
 
 function AdminHeader(props) {
@@ -7,7 +8,7 @@ function AdminHeader(props) {
   const navigate = useNavigate();
   const handleLogOut = () => {
     // window.location.href = "/login";
-    navigate("/login");
+    navigate(ROUTES.USER.HOME);
   };
 
   return (

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, generatePath } from "react-router-dom";
 import { Input } from "antd";
 import { Button, Card, Row, Col } from "antd";
@@ -6,8 +6,8 @@ import * as S from "./styles";
 import { ROUTES } from "../../../constants/routes";
 
 function HomeWrapper() {
-  const [count, setCount] = useState(0);
-  const [value, setValue] = useState("");
+  // const [count, setCount] = useState(0);
+  // const [value, setValue] = useState("");
   const [productList, setProductList] = useState([
     {
       name: "iPhone 14",
@@ -56,17 +56,26 @@ function HomeWrapper() {
     console.log(e.target);
     console.log(`buy ${name}`);
   };
+  //mouting và unmoungting
+  useEffect(() => {
+    //Câu lệnh gọi API
+    console.log("Khởi tạo");
+    return () => {
+      //Clear dữ liệu khi rời khỏi
+      console.log("Rời khỏi");
+    };
+  }, []);
 
-  const handleChangeSearchkey = (e) => {
-    setValue(e.target.value);
-  };
+  // const handleChangeSearchkey = (e) => {
+  //   setValue(e.target.value);
+  // };
 
-  const handlePlus = () => {
-    setCount(count + 1);
-  };
-  const handleMinus = () => {
-    setCount(count - 1);
-  };
+  // const handlePlus = () => {
+  //   setCount(count + 1);
+  // };
+  // const handleMinus = () => {
+  //   setCount(count - 1);
+  // };
 
   const handleAddProduct = () => {
     //TRONG REACT KO THỂ SÉT 2 STATE GIỐNG NHAU TRỞ LÊN TRONG CÙNG 1 FUNCTION
@@ -132,7 +141,7 @@ function HomeWrapper() {
 
   return (
     <S.HomeWrapper>
-      <Button onClick={() => handlePlus()}>+</Button>
+      {/* <Button onClick={() => handlePlus()}>+</Button>
       <h3>{count}</h3>
       <Button onClick={() => handleMinus()}>-</Button>
       <div>
@@ -143,7 +152,7 @@ function HomeWrapper() {
           onChange={(e) => handleChangeSearchkey(e)}
         />
         <p>{value}</p>
-      </div>
+      </div> */}
       <Row gutter={[16, 16]}>{renderProductList()}</Row>
       <Input
         type="text"
