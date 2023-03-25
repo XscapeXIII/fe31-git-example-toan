@@ -1,4 +1,3 @@
-import { type } from "@testing-library/user-event/dist/type";
 import { Form, Input, Card, Button } from "antd";
 
 function TodoList() {

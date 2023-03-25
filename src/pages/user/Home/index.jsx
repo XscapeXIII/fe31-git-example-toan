@@ -3,6 +3,9 @@ import { Link, generatePath } from "react-router-dom";
 import { Input } from "antd";
 import { Button, Card, Row, Col } from "antd";
 import * as S from "./styles";
+
+import { useDispatch, useSelector } from "react-redux";
+
 import { ROUTES } from "../../../constants/routes";
 
 function HomeWrapper() {
@@ -120,6 +123,15 @@ function HomeWrapper() {
     setProductError(errors);
   };
 
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state.product);
+  const getproductList = () => {
+    dispatch({
+      type: "GET_PRODUCT_LIST",
+      payload: 123,
+    });
+  };
+
   const renderProductList = () => {
     return productList.map((item, index) => {
       return (
@@ -171,6 +183,7 @@ function HomeWrapper() {
       <Button size="large" type="primary" onClick={() => handleAddProduct()}>
         Add Product
       </Button>
+      <Button onClick={() => getproductList()}>Get product List</Button>
     </S.HomeWrapper>
   );
 }

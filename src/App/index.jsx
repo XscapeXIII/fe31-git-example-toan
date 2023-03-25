@@ -23,8 +23,10 @@ import LoginPage from "../pages/Login";
 
 import { dark, light } from "../themes";
 
+import { useSelector } from "react-redux";
+
 function App() {
-  const [theme, setTheme] = useState("light");
+  const { theme } = useSelector((state) => state.common);
   return (
     <ConfigProvider
       theme={{
