@@ -6,7 +6,6 @@ const initialState = {
 
 const commonReducer = createReducer(initialState, {
   CHANGE_THEME: (state, action) => {
-    //get list
     return {
       ...state,
       theme: action.payload,

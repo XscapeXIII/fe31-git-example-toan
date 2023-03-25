@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link, generatePath } from "react-router-dom";
-import { Input } from "antd";
-import { Button, Card, Row, Col } from "antd";
+
+import { Button, Card, Row, Col, Input } from "antd";
 import * as S from "./styles";
 
 import { useDispatch, useSelector } from "react-redux";
+
+import { getProductListAction } from "../../../redux/actions";
 
 import { ROUTES } from "../../../constants/routes";
 
@@ -125,11 +127,9 @@ function HomeWrapper() {
 
   const dispatch = useDispatch();
   const data = useSelector((state) => state.product);
+  console.log("🚀 ~ file: index.jsx:130 ~ HomeWrapper ~ data:", data);
   const getproductList = () => {
-    dispatch({
-      type: "GET_PRODUCT_LIST",
-      payload: 123,
-    });
+    dispatch(getProductListAction([1, 2, 3]));
   };
 
   const renderProductList = () => {

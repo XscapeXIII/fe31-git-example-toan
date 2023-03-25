@@ -20,6 +20,10 @@ const SIDEBAR_ITEMS = [
     label: "Register",
     path: ROUTES.REGISTER,
   },
+  {
+    label: "ToDoList",
+    path: ROUTES.ADMIN.TODO_LIST,
+  },
 ];
 
 function Sidebar(props) {

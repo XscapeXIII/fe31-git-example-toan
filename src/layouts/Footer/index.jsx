@@ -1,11 +1,12 @@
 import * as S from "./styles";
 import { Button } from "antd";
-import { useDispatch } from "react-redux";
 
-import { changeThemeAction } from "../../redux/actions/common.action";
+import { useDispatch } from "react-redux";
+import { changeThemeAction } from "../../redux/actions";
 
 function Footer() {
   const dispatch = useDispatch();
+
   const handleChangeTheme = (theme) => {
     dispatch(changeThemeAction(theme));
   };
@@ -16,14 +17,14 @@ function Footer() {
       <div>
         <Button
           onClick={() => {
-            handleChangeTheme();
+            handleChangeTheme("light");
           }}
         >
           Light
         </Button>
         <Button
           onClick={() => {
-            handleChangeTheme();
+            handleChangeTheme("dark");
           }}
         >
           Dark

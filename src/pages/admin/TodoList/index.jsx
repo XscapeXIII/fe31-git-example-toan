@@ -1,72 +1,123 @@
-import { Form, Input, Card, Button } from "antd";
+import { useState } from "react";
+
+import { Link, generatePath } from "react-router-dom";
+
+import { Form, Input, Card, Button, Col } from "antd";
+
+import { v4 as uuidv4 } from "uuid";
+
+import { ROUTES } from "../../../constants/routes";
 
 function TodoList() {
+  uuidv4();
+
+  const [productList, setProductList] = useState([
+    {
+      title: "",
+      content: "",
+    },
+  ]);
+
+  const [productData, setProductData] = useState({
+    title: "",
+    content: "",
+  });
+
+  const handleChangeProductData = (e, key) => {
+    setProductData({
+      ...productData,
+      [key]: e.target.value,
+    });
+  };
+
+  const renderList = () => {
+    return productList.map((item, index) => {
+      return (
+        <Col key={index} xs={24} md={12} xl={8}>
+          <Link to={generatePath(ROUTES.ADMIN.TODO_LIST, { id: index + 1 })}>
+            <Card size="small">
+              <h3>Title: {item.title}</h3>
+              <h3>Content: {item.content}</h3>
+              <Button>Update</Button>
+              <Button>Delete</Button>
+            </Card>
+          </Link>
+        </Col>
+      );
+    });
+  };
+
   return (
     <div>
       <Card>
         <Form
           name="todolist"
           layout="vertical"
-          // labelCol={{ span: 4 }}
-          // wrapperCol={{ span: 18 }}
-          onFinish={(values) => console.log(values)}
+          onFinish={() => {
+            setProductList([
+              ...productList,
+              {
+                title: productData.title,
+                content: productData.content,
+              },
+            ]);
+            setProductData({
+              title: "",
+              content: "",
+            });
+          }}
         >
           <Form.Item
-            label="Email:"
-            name="email"
+            label="Title:"
+            name="title"
             validateFirst
             rules={[
               {
                 required: true,
                 whitespace: true,
-                message: "Email require!",
+                message: "Title require!",
               },
               {
-                type: "email",
-                message: "Email not true!",
+                pattern: /^[A-Z][a-z0-9_-]{3,19}$/g,
+                message:
+                  "The first letter must be UPPERCASE, Title 3-20 character",
               },
             ]}
           >
-            <Input />
+            <Input
+              type="text"
+              onChange={(e) => handleChangeProductData(e, "title")}
+              value={productData.title}
+            />
           </Form.Item>
           <Form.Item
-            label="User:"
-            name="user"
+            label="Content:"
+            name="content"
+            validateFirst
             rules={[
               {
                 required: true,
-                message: "User require!",
+                whitespace: true,
+                message: "Content require!",
               },
               {
-                min: 3,
-                type: "string",
-                message: "User more 3 character",
+                pattern: /^[a-zA-Z0-9]{2,20}$/g,
+                message: "Content must be have 2-20 character",
               },
             ]}
           >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="PhoneNumber:"
-            name="phonenumber"
-            rules={[
-              {
-                required: true,
-                message: "PhoneNumber require!",
-              },
-              {
-                pattern: /(84|0[3|5|7|8|9])+([0-9]{8})\b/g,
-                message: "PhoneNumber not true",
-              },
-            ]}
-          >
-            <Input />
+            <Input
+              type="text"
+              onChange={(e) => handleChangeProductData(e, "content")}
+              value={productData.content}
+            />
           </Form.Item>
           <Button htmlType="submit" type="primary" block>
-            Submit
+            Add
           </Button>
         </Form>
       </Card>
+      <Card>{renderList()}</Card>
     </div>
   );
 }
