@@ -1,18 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Link, generatePath } from "react-router-dom";
 
-import { Form, Input, Card, Button, Col } from "antd";
+import { Form, Input, Card, Button, Col, Row } from "antd";
 
-import { v4 as uuidv4 } from "uuid";
+import { v4 } from "uuid";
 
 import { ROUTES } from "../../../constants/routes";
 
 function TodoList() {
-  uuidv4();
+  const uuid = v4();
 
   const [productList, setProductList] = useState([
     {
+      id: "",
       title: "",
       content: "",
     },
@@ -21,6 +22,13 @@ function TodoList() {
   const [productData, setProductData] = useState({
     title: "",
     content: "",
+    id: "",
+  });
+
+  const [productDataUpdate, setProductDataUpdate] = useState({
+    title: "",
+    content: "",
+    id: "",
   });
 
   const handleChangeProductData = (e, key) => {
@@ -32,14 +40,87 @@ function TodoList() {
 
   const renderList = () => {
     return productList.map((item, index) => {
+      if (item.isUpdating === true)
+        return (
+          <Col key={index} xs={24} md={12} xl={8}>
+            <Link to={generatePath(ROUTES.ADMIN.TODO_LIST, { id: uuid })}>
+              <Card size="small">
+                <Input
+                  type="text"
+                  name=""
+                  id=""
+                  value={productDataUpdate.title}
+                  onChange={(e) =>
+                    setProductDataUpdate({
+                      ...productDataUpdate,
+                      title: e.target.value,
+                    })
+                  }
+                />
+                <Input
+                  type="text"
+                  name=""
+                  id=""
+                  value={productDataUpdate.content}
+                  onChange={(e) =>
+                    setProductDataUpdate({
+                      ...productDataUpdate,
+                      content: e.target.value,
+                    })
+                  }
+                />
+                <Button
+                  onClick={() => {
+                    productList[index] = productDataUpdate;
+                    item.isUpdating = false;
+                    setProductList([...productList]);
+                  }}
+                >
+                  Save
+                </Button>
+                <Button
+                  onClick={() => {
+                    item.isUpdating = false;
+                    setProductDataUpdate({
+                      id: "",
+                      title: "",
+                      content: "",
+                    });
+                    setProductList([...productList]);
+                  }}
+                >
+                  Cancel
+                </Button>
+                <Button>Delete</Button>
+              </Card>
+            </Link>
+          </Col>
+        );
       return (
         <Col key={index} xs={24} md={12} xl={8}>
-          <Link to={generatePath(ROUTES.ADMIN.TODO_LIST, { id: index + 1 })}>
+          <Link to={generatePath(ROUTES.ADMIN.TODO_LIST, { id: uuid })}>
             <Card size="small">
               <h3>Title: {item.title}</h3>
               <h3>Content: {item.content}</h3>
-              <Button>Update</Button>
-              <Button>Delete</Button>
+              <Button
+                onClick={() => {
+                  item.isUpdating = true;
+                  setProductDataUpdate(item);
+                  setProductList([...productList]);
+                }}
+              >
+                Update
+              </Button>
+              <Button
+                onClick={() => {
+                  // const i = productList.findIndex((p) => p.id === item.id);
+                  // productList.splice(i, 1);
+                  productList.splice(index, 1);
+                  setProductList([...productList]);
+                }}
+              >
+                Delete
+              </Button>
             </Card>
           </Link>
         </Col>
@@ -57,11 +138,13 @@ function TodoList() {
             setProductList([
               ...productList,
               {
+                id: uuid,
                 title: productData.title,
                 content: productData.content,
               },
             ]);
             setProductData({
+              id: "",
               title: "",
               content: "",
             });
@@ -117,7 +200,7 @@ function TodoList() {
           </Button>
         </Form>
       </Card>
-      <Card>{renderList()}</Card>
+      <Row gutter={[16, 16]}>{renderList()}</Row>
     </div>
   );
 }

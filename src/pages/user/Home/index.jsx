@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, generatePath } from "react-router-dom";
 
 import { Button, Card, Row, Col, Input } from "antd";
@@ -61,15 +61,6 @@ function HomeWrapper() {
     console.log(e.target);
     console.log(`buy ${name}`);
   };
-  //mouting và unmoungting
-  useEffect(() => {
-    //Câu lệnh gọi API
-    console.log("Khởi tạo");
-    return () => {
-      //Clear dữ liệu khi rời khỏi
-      console.log("Rời khỏi");
-    };
-  }, []);
 
   // const handleChangeSearchkey = (e) => {
   //   setValue(e.target.value);
