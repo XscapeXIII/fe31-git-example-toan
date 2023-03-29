@@ -24,6 +24,10 @@ const SIDEBAR_ITEMS = [
     label: "ToDoList",
     path: ROUTES.ADMIN.TODO_LIST,
   },
+  {
+    label: "ToDoList2",
+    path: ROUTES.ADMIN.TODO_LIST2,
+  },
 ];
 
 function Sidebar(props) {

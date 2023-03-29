@@ -20,15 +20,15 @@ function TodoList() {
   ]);
 
   const [productData, setProductData] = useState({
+    id: "",
     title: "",
     content: "",
-    id: "",
   });
 
   const [productDataUpdate, setProductDataUpdate] = useState({
+    id: "",
     title: "",
     content: "",
-    id: "",
   });
 
   const handleChangeProductData = (e, key) => {

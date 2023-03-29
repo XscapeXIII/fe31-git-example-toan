@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import productReducer from "./redux/reducers/product.reducer";
+import todolistReducer from "./redux/reducers/todolist.reducer";
 import categoryReducer from "./redux/reducers/category.reducer";
 import commonReducer from "./redux/reducers/common.reducer";
 
 export const store = configureStore({
   reducer: {
-    product: productReducer,
+    todolist: todolistReducer,
     category: categoryReducer,
     common: commonReducer,
   },
