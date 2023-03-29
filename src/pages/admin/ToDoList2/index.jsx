@@ -1,6 +1,11 @@
-import { Fragment, useState } from "react";
+import { useState } from "react";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getAddToDoAction,
+  getEditToDoAction,
+  getRemoveToDoAction,
+} from "../../../redux/actions";
 
 import { v4 as uuidv4 } from "uuid";
 import { Form, Input, Card, Button } from "antd";
@@ -9,13 +14,11 @@ import TodoItem from "./TodoItem";
 
 function TodoList2() {
   const dispatch = useDispatch();
+  // const { newToDoList, productList } = useSelector((state) => state.TodoList2);
   const [toDoList, setToDoList] = useState([]);
 
   const handleAddToDo = (values) => {
-    dispatch({
-      type: "ADD_TO_DO",
-      payload: values,
-    });
+    dispatch(getAddToDoAction(values));
     const newValues = {
       ...values,
       id: uuidv4(),
@@ -25,10 +28,7 @@ function TodoList2() {
   };
 
   const handleEditToDo = (id, values) => {
-    dispatch({
-      type: "EDIT_TO_DO",
-      payload: { id, ...values },
-    });
+    dispatch(getEditToDoAction(id, values));
     const newToDoList = [...toDoList];
     const index = toDoList.findIndex((item) => item.id === id);
     newToDoList.splice(index, 1, values);
@@ -36,10 +36,7 @@ function TodoList2() {
   };
 
   const handleRemoveToDo = (id) => {
-    dispatch({
-      type: "REMOVE_TO_DO",
-      payload: id,
-    });
+    dispatch(getRemoveToDoAction(id));
     const newToDoList = [...toDoList];
     const index = toDoList.findIndex((item) => item.id === id);
     newToDoList.splice(index, 1);
