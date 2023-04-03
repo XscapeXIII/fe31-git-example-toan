@@ -1,17 +1,17 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { editToDoAction, removeToDoAction } from "../../../redux/actions";
+import { useNavigate, generatePath } from "react-router-dom";
+import { ROUTES } from "../../../constants/routes";
 
 import { Form, Input, Card, Button, Space } from "antd";
 
-function TodoListItem({
-  id,
-  title,
-  content,
-  handleEditToDo,
-  handleRemoveToDo,
-}) {
+function TodoItem({ id, title, content }) {
   const [isEdit, setIsEdit] = useState(false);
-
   const [editForm] = Form.useForm();
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const renderView = () => {
     return (
@@ -35,7 +35,7 @@ function TodoListItem({
           content,
         }}
         onFinish={(values) => {
-          handleEditToDo(id, values);
+          dispatch(editToDoAction({ id: id, values: values }));
           setIsEdit(false);
         }}
       >
@@ -91,6 +91,7 @@ function TodoListItem({
 
   return (
     <Card size="small" style={{ marginTop: 16 }}>
+      {/* nếu isEdit true thì xét renderEdit, còn false thì xét renderView */}
       {isEdit ? renderEdit() : renderView()}
       <Space>
         {isEdit ? (
@@ -112,7 +113,25 @@ function TodoListItem({
             Edit
           </Button>
         )}
-        <Button danger onClick={() => handleRemoveToDo(id)}>
+        <Button
+          onClick={() =>
+            navigate(
+              {
+                pathname: generatePath(ROUTES.ADMIN.TODO_DETAIL, { id: id }),
+                search: `?title=${title}&content=${content}`,
+              },
+              {
+                state: {
+                  title: title,
+                  content: content,
+                },
+              }
+            )
+          }
+        >
+          Detail
+        </Button>
+        <Button danger onClick={() => dispatch(removeToDoAction({ id: id }))}>
           Remove
         </Button>
       </Space>
@@ -120,4 +139,4 @@ function TodoListItem({
   );
 }
 
-export default TodoListItem;
+export default TodoItem;

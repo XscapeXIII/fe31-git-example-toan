@@ -1,69 +1,56 @@
-import { useState } from "react";
+import { useState, Fragment, useMemo } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getAddToDoAction,
-  getEditToDoAction,
-  getRemoveToDoAction,
-} from "../../../redux/actions";
+import { addToDoAction } from "../../../redux/actions";
 
-import { v4 as uuidv4 } from "uuid";
 import { Form, Input, Card, Button } from "antd";
 
 import TodoItem from "./TodoItem";
 
-function TodoList2() {
+function ToDoList() {
   const dispatch = useDispatch();
-  // const { newToDoList, productList } = useSelector((state) => state.TodoList2);
-  const [toDoList, setToDoList] = useState([]);
+  //Lấy selector là cái tên đặt ở trong store.js
+  const { toDoList } = useSelector((state) => state.todo);
+  const [addForm] = Form.useForm();
 
-  const handleAddToDo = (values) => {
-    dispatch(getAddToDoAction(values));
-    const newValues = {
-      ...values,
-      id: uuidv4(),
-    };
-    const newToDoList = [newValues, ...toDoList];
-    setToDoList(newToDoList);
-  };
+  const [searchKey, setSearchKey] = useState("");
+  const [text, setText] = useState("");
 
-  const handleEditToDo = (id, values) => {
-    dispatch(getEditToDoAction(id, values));
-    const newToDoList = [...toDoList];
-    const index = toDoList.findIndex((item) => item.id === id);
-    newToDoList.splice(index, 1, values);
-    setToDoList(newToDoList);
-  };
+  const filterToDoList = useMemo(
+    () =>
+      toDoList.filter((item) =>
+        item.title.toLowerCase().includes(searchKey.toLowerCase())
+      ),
+    [searchKey, toDoList]
+  );
 
-  const handleRemoveToDo = (id) => {
-    dispatch(getRemoveToDoAction(id));
-    const newToDoList = [...toDoList];
-    const index = toDoList.findIndex((item) => item.id === id);
-    newToDoList.splice(index, 1);
-    setToDoList(newToDoList);
-  };
-
-  const renderToDoList = () => {
-    return toDoList.map((item) => (
-      <TodoItem
-        key={item.id}
-        id={item.id}
-        title={item.title}
-        content={item.content}
-        handleEditToDo={handleEditToDo}
-        handleRemoveToDo={handleRemoveToDo}
-      />
-    ));
-  };
+  const renderToDoList = useMemo(() => {
+    return filterToDoList.map((item) => {
+      return (
+        <Fragment key={item.id}>
+          <TodoItem
+            key={item.id}
+            id={item.id}
+            title={item.title}
+            content={item.content}
+          />
+        </Fragment>
+      );
+    });
+  }, [filterToDoList]);
 
   return (
     <div>
       <Card size="small">
         <Form
           name="addTodo"
+          form={addForm}
           labelCol={{ span: 4 }}
           wrapperCol={{ span: 20 }}
-          onFinish={(values) => handleAddToDo(values)}
+          onFinish={(values) => {
+            dispatch(addToDoAction(values));
+            addForm.resetFields();
+          }}
         >
           <Form.Item
             label="Title"
@@ -116,9 +103,17 @@ function TodoList2() {
           </Button>
         </Form>
       </Card>
-      {renderToDoList()}
+      <Input
+        onChange={(e) => setSearchKey(e.target.value)}
+        style={{ marginTop: 16 }}
+      />
+      {renderToDoList}
+      <Input
+        onChange={(e) => setSearchKey(e.target.value)}
+        style={{ marginTop: 16 }}
+      />
     </div>
   );
 }
 
-export default TodoList2;
+export default ToDoList;

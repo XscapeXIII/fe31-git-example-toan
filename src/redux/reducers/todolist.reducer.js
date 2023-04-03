@@ -5,7 +5,7 @@ const initialState = {
   toDoList: [],
 };
 
-const productReducer = createReducer(initialState, {
+const todoListReducer = createReducer(initialState, {
   ADD_TO_DO: (state, action) => {
     const newValues = {
       ...action.payload,
@@ -14,32 +14,29 @@ const productReducer = createReducer(initialState, {
     const newToDoList = [newValues, ...state.toDoList];
     return {
       ...state,
-      productList: newToDoList,
+      toDoList: newToDoList,
     };
   },
   EDIT_TO_DO: (state, action) => {
-    console.log(action.payload);
+    const { id, values } = action.payload;
     const newToDoList = [...state.toDoList];
-    const index = newToDoList.findIndex(
-      (item) => item.id === action.payload.id
-    );
-    newToDoList.splice(index, 1, action.payload);
+    const index = state.toDoList.findIndex((item) => item.id === id);
+    newToDoList.splice(index, 1, values);
     return {
       ...state,
-      productList: newToDoList,
+      toDoList: newToDoList,
     };
   },
   REMOVE_TO_DO: (state, action) => {
+    const { id } = action.payload;
     const newToDoList = [...state.toDoList];
-    const index = newToDoList.findIndex(
-      (item) => item.id === action.payload.id
-    );
+    const index = state.toDoList.findIndex((item) => item.id === id);
     newToDoList.splice(index, 1);
     return {
       ...state,
-      productList: newToDoList,
+      toDoList: newToDoList,
     };
   },
 });
 
-export default productReducer;
+export default todoListReducer;

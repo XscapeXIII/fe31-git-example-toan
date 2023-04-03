@@ -11,7 +11,8 @@ import FormLayout from "../layouts/FormLayout";
 
 import Dashboard from "../pages/admin/Dashboard";
 import TodoList from "../pages/admin/TodoList";
-import TodoList2 from "../pages/admin/ToDoList2";
+import ToDoList from "../pages/admin/ToDoList2";
+import ToDoDetailPage from "../pages/admin/ToDoDetail";
 
 import { ROUTES } from "../constants/routes";
 
@@ -40,7 +41,11 @@ function App() {
           <Route element={<AdminLayout />}>
             <Route path={ROUTES.ADMIN.DASHBOARD} element={<Dashboard />} />
             <Route path={ROUTES.ADMIN.TODO_LIST} element={<TodoList />} />
-            <Route path={ROUTES.ADMIN.TODO_LIST2} element={<TodoList2 />} />
+            <Route path={ROUTES.ADMIN.TODO_LIST2} element={<ToDoList />} />
+            <Route
+              path={ROUTES.ADMIN.TODO_DETAIL}
+              element={<ToDoDetailPage />}
+            />
           </Route>
           <Route element={<UserLayout />}>
             <Route path={ROUTES.USER.HOME} element={<HomePage />} />
