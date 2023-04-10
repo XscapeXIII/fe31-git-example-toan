@@ -2,12 +2,9 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../constants/routes";
 import * as S from "./styles";
 
-function AdminHeader(props) {
-  const { setIsShowSidebar, isShowSidebar } = props;
-
+function AdminHeader({ setIsShowSidebar, isShowSidebar }) {
   const navigate = useNavigate();
   const handleLogOut = () => {
-    // window.location.href = "/login";
     navigate(ROUTES.USER.HOME);
   };
 

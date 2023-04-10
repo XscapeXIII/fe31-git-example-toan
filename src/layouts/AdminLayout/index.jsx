@@ -5,7 +5,6 @@ import * as S from "./styles";
 
 import AdminHeader from "../AdminHeader";
 import Sidebar from "../Sidebar";
-import { ROUTES } from "../../constants/routes";
 
 function AdminLayout() {
   const [isShowSidebar, setIsShowSidebar] = useState(true);

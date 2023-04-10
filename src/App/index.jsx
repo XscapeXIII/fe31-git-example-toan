@@ -58,6 +58,7 @@ function App() {
           <Route element={<FormLayout />}>
             <Route path={ROUTES.LOGIN} element={<LoginPage />} />
           </Route>
+          <Route path="*" element={<div>404 not found</div>} />
         </Routes>
       </ThemeProvider>
     </ConfigProvider>

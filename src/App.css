@@ -99,9 +99,6 @@
   position: relative;
 }
 
-.sidebar.show {
-  left: 0;
-}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
