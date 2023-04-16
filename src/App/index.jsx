@@ -17,6 +17,7 @@ import ToDoDetailPage from "../pages/admin/ToDoDetail";
 import { ROUTES } from "../constants/routes";
 
 import HomePage from "../pages/user/Home";
+import ProductListPage from "../pages/user/ProductList";
 import AboutPage from "../pages/user/About";
 import ProductDetailPage from "../pages/user/ProductDetail";
 
@@ -49,6 +50,10 @@ function App() {
           </Route>
           <Route element={<UserLayout />}>
             <Route path={ROUTES.USER.HOME} element={<HomePage />} />
+            <Route
+              path={ROUTES.USER.PRODUCT_LIST}
+              element={<ProductListPage />}
+            />
             <Route path={ROUTES.USER.ABOUT} element={<AboutPage />} />
             <Route
               path={ROUTES.USER.PRODUCT_DETAIL}

@@ -1,0 +1,90 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "iPhone 14 Pro",
+      "price": 35000000,
+      "categoryId": 1
+    },
+    {
+      "id": 2,
+      "name": "iPhone 15 Pro",
+      "price": 35000000,
+      "categoryId": 1
+    },
+    {
+      "id": 3,
+      "name": "SamSung 20",
+      "price": 35000000,
+      "categoryId": 2
+    },
+    {
+      "id": 4,
+      "name": "SamSung S20 Galaxy",
+      "price": 35000000,
+      "categoryId": 2
+    },
+    {
+      "id": 5,
+      "name": "SamSung S21",
+      "price": 35000000,
+      "categoryId": 2
+    },
+    {
+      "id": 6,
+      "name": "Xiaomi note 10",
+      "price": 35000000,
+      "categoryId": 3
+    },
+    {
+      "id": 7,
+      "name": "Xiaomi note 11",
+      "price": 35000000,
+      "categoryId": 3
+    },
+    {
+      "id": 8,
+      "name": "Xiaomi note 12",
+      "price": 35000000,
+      "categoryId": 3
+    },
+    {
+      "id": 9,
+      "name": "Iphone Xs Max",
+      "price": 35000000,
+      "categoryId": 1
+    },
+    {
+      "id": 10,
+      "name": "Iphone 11",
+      "price": 35000000,
+      "categoryId": 1
+    },
+    {
+      "id": 11,
+      "name": "Iphone 12",
+      "price": 35000000,
+      "categoryId": 1
+    },
+    {
+      "id": 12,
+      "name": "Samsung S22",
+      "price": 35000000,
+      "categoryId": 2
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Apple"
+    },
+    {
+      "id": 2,
+      "name": "SamSung"
+    },
+    {
+      "id": 3,
+      "name": "Xiaomi"
+    }
+  ]
+}

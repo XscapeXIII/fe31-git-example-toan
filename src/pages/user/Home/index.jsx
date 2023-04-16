@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, generatePath } from "react-router-dom";
 
 import { Button, Card, Row, Col, Input } from "antd";
@@ -62,6 +62,10 @@ function HomeWrapper() {
     console.log(`buy ${name}`);
   };
 
+  useEffect(() => {
+    dispatch(getProductListAction());
+  }, []);
+
   // const handleChangeSearchkey = (e) => {
   //   setValue(e.target.value);
   // };
@@ -119,9 +123,6 @@ function HomeWrapper() {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.product);
   console.log("🚀 ~ file: index.jsx:130 ~ HomeWrapper ~ data:", data);
-  const getproductList = () => {
-    dispatch(getProductListAction([1, 2, 3]));
-  };
 
   const renderProductList = () => {
     return productList.map((item, index) => {
@@ -174,7 +175,6 @@ function HomeWrapper() {
       <Button size="large" type="primary" onClick={() => handleAddProduct()}>
         Add Product
       </Button>
-      <Button onClick={() => getproductList()}>Get product List</Button>
     </S.HomeWrapper>
   );
 }

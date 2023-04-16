@@ -5,7 +5,6 @@ import * as S from "./styles";
 function AdminHeader() {
   const navigate = useNavigate();
   const handleLogin = () => {
-    // window.location.href = "/login";
     navigate(ROUTES.LOGIN);
   };
 
@@ -21,6 +20,11 @@ function AdminHeader() {
         <div className="nav-link-item">
           <Link to={ROUTES.USER.ABOUT}>
             <h4>about</h4>
+          </Link>
+        </div>
+        <div className="nav-link-item">
+          <Link to={ROUTES.USER.PRODUCT_LIST}>
+            <h4>ProductListPage</h4>
           </Link>
         </div>
       </div>
