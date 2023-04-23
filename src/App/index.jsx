@@ -1,5 +1,7 @@
+import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { ConfigProvider } from "antd";
+import jwtDecode from "jwt-decode";
 
 import { ThemeProvider } from "styled-components";
 
@@ -15,6 +17,7 @@ import ToDoList from "../pages/admin/ToDoList2";
 import ToDoDetailPage from "../pages/admin/ToDoDetail";
 
 import { ROUTES } from "../constants/routes";
+import { getUserInfoAction } from "../redux/actions";
 
 import HomePage from "../pages/user/Home";
 import ProductListPage from "../pages/user/ProductList";
@@ -22,13 +25,23 @@ import AboutPage from "../pages/user/About";
 import ProductDetailPage from "../pages/user/ProductDetail";
 
 import LoginPage from "../pages/Login";
+import RegisterPage from "../pages/Register";
 
 import { dark, light } from "../themes";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 function App() {
   const { theme } = useSelector((state) => state.common);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      const tokenData = jwtDecode(accessToken);
+      dispatch(getUserInfoAction({ id: tokenData.sub }));
+    }
+  }, []);
+
   return (
     <ConfigProvider
       theme={{
@@ -62,6 +75,7 @@ function App() {
           </Route>
           <Route element={<FormLayout />}>
             <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+            <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
           </Route>
           <Route path="*" element={<div>404 not found</div>} />
         </Routes>

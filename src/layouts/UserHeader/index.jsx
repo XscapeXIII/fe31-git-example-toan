@@ -1,12 +1,15 @@
+import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+
+import { Dropdown, Button } from "antd";
 import { ROUTES } from "../../constants/routes";
+import { logoutAction } from "../../redux/actions";
 import * as S from "./styles";
 
 function AdminHeader() {
+  const dispatch = useDispatch();
+  const { userInfo } = useSelector((state) => state.auth);
   const navigate = useNavigate();
-  const handleLogin = () => {
-    navigate(ROUTES.LOGIN);
-  };
 
   return (
     <S.Headerwrapper>
@@ -28,9 +31,32 @@ function AdminHeader() {
           </Link>
         </div>
       </div>
+
       <div>
-        <button onClick={() => navigate(ROUTES.ADMIN.DASHBOARD)}>ADMIN</button>
-        <button onClick={() => handleLogin()}>Login</button>
+        {userInfo.data.id ? (
+          <Dropdown
+            menu={{
+              items: [
+                {
+                  key: "dashboard",
+                  label: <Link to={ROUTES.ADMIN.DASHBOARD}>Dashboard</Link>,
+                  style: {
+                    display: userInfo.data.role === "admin" ? "block" : "none",
+                  },
+                },
+                {
+                  key: "logout",
+                  label: "Logout",
+                  onClick: () => dispatch(logoutAction()),
+                },
+              ],
+            }}
+          >
+            <h3>{userInfo.data.fullName}</h3>
+          </Dropdown>
+        ) : (
+          <Button onClick={() => navigate(ROUTES.LOGIN)}>Login</Button>
+        )}
       </div>
     </S.Headerwrapper>
   );

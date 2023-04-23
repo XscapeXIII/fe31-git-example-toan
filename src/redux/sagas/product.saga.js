@@ -1,18 +1,26 @@
-import { put, takeEvery } from "redux-saga/effects";
+import { put, takeEvery, debounce } from "redux-saga/effects";
 import axios from "axios";
+
+import { PRODUCT_ACTION, REQUEST, SUCCESS, FAIL } from "../constants/";
 
 function* getProductListSaga(action) {
   try {
-    const { page, limit, categoryId, more } = action.payload;
+    const { page, limit, categoryId, more, searchKey, sort } = action.payload;
+
     const result = yield axios.get("http://localhost:4000/products", {
       params: {
         _page: page,
         _limit: limit,
         categoryId: categoryId,
+        q: searchKey,
+        ...(sort && {
+          _sort: sort.split(".")[0],
+          _order: sort.split(".")[1],
+        }),
       },
     });
     yield put({
-      type: "GET_PRODUCT_LIST_SUCCESS",
+      type: SUCCESS(PRODUCT_ACTION.GET_PRODUCT_LIST),
       payload: {
         data: result.data,
         meta: {
@@ -25,7 +33,28 @@ function* getProductListSaga(action) {
     });
   } catch (e) {
     yield put({
-      type: "GET_PRODUCT_LIST_FAIL",
+      type: FAIL(PRODUCT_ACTION.GET_PRODUCT_LIST),
+      payload: {
+        error: "Error!",
+      },
+    });
+  }
+}
+
+function* getProductDetailSaga(action) {
+  try {
+    const { id } = action.payload;
+
+    const result = yield axios.get(`http://localhost:4000/products/${id}`);
+    yield put({
+      type: SUCCESS(PRODUCT_ACTION.GET_PRODUCT_DETAIL),
+      payload: {
+        data: result.data,
+      },
+    });
+  } catch (e) {
+    yield put({
+      type: FAIL(PRODUCT_ACTION.GET_PRODUCT_DETAIL),
       payload: {
         error: "Error!",
       },
@@ -34,5 +63,13 @@ function* getProductListSaga(action) {
 }
 
 export default function* productSaga() {
-  yield takeEvery("GET_PRODUCT_LIST_REQUEST", getProductListSaga);
+  yield debounce(
+    300,
+    REQUEST(PRODUCT_ACTION.GET_PRODUCT_LIST),
+    getProductListSaga
+  );
+  yield takeEvery(
+    REQUEST(PRODUCT_ACTION.GET_PRODUCT_DETAIL),
+    getProductDetailSaga
+  );
 }

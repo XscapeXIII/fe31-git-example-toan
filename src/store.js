@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import authReducer from "./redux/reducers/auth.reducer";
 import productReducer from "./redux/reducers/product.reducer";
 import todoListReducer from "./redux/reducers/todolist.reducer";
 import categoryReducer from "./redux/reducers/category.reducer";
@@ -11,6 +12,7 @@ const sagaMiddleware = createSagaMiddleware();
 
 const store = configureStore({
   reducer: {
+    auth: authReducer,
     product: productReducer,
     todo: todoListReducer,
     category: categoryReducer,

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, generatePath } from "react-router-dom";
 
-import { Button, Card, Row, Col, Input, Select, Checkbox } from "antd";
+import { Button, Card, Row, Col, Input, Select, Checkbox, Spin } from "antd";
 import * as S from "./styles";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -22,8 +22,9 @@ function ProductListPage() {
   const [filterParams, setFilterParams] = useState({
     categoryId: [],
     searchKey: "",
+    sort: "",
   });
-
+  // console.log(filterParams);
   useEffect(() => {
     dispatch(
       getProductListAction({
@@ -34,6 +35,21 @@ function ProductListPage() {
     dispatch(getCategoryListAction());
   }, []);
 
+  const handleFilter = (key, values) => {
+    setFilterParams({
+      ...filterParams,
+      [key]: values,
+    });
+    dispatch(
+      getProductListAction({
+        ...filterParams,
+        [key]: values,
+        page: 1,
+        limit: PRODUCT_LIMIT,
+      })
+    );
+  };
+
   const renderCategoryFilter = useMemo(() => {
     return categoryList.data.map((item) => {
       return (
@@ -43,20 +59,6 @@ function ProductListPage() {
       );
     });
   }, [categoryList.data]);
-
-  const handleFilterCategory = (values) => {
-    setFilterParams({
-      ...filterParams,
-      categoryId: values,
-    });
-    dispatch(
-      getProductListAction({
-        page: 1,
-        limit: PRODUCT_LIMIT,
-        categoryId: values,
-      })
-    );
-  };
 
   const renderProductList = useMemo(() => {
     return productList.data.map((item) => {
@@ -75,9 +77,9 @@ function ProductListPage() {
   const handleShowMore = () => {
     dispatch(
       getProductListAction({
+        ...filterParams,
         page: productList.meta.page + 1,
         limit: PRODUCT_LIMIT,
-        categoryId: filterParams.categoryId,
         more: true,
       })
     );
@@ -88,7 +90,9 @@ function ProductListPage() {
       <Row gutter={[16, 16]} size="small">
         <Col span={6}>
           <Card title="Filter">
-            <Checkbox.Group onChange={(values) => handleFilterCategory(values)}>
+            <Checkbox.Group
+              onChange={(values) => handleFilter("categoryId", values)}
+            >
               <Row>{renderCategoryFilter}</Row>
             </Checkbox.Group>
           </Card>
@@ -96,16 +100,27 @@ function ProductListPage() {
         <Col span={18}>
           <Row gutter={[8, 8]} style={{ marginBottom: 16 }}>
             <Col span={18}>
-              <Input />
+              <Input
+                onChange={(e) => handleFilter("searchKey", e.target.value)}
+                placeholder="Search..."
+              />
             </Col>
             <Col span={6}>
-              <Select style={{ width: "100%" }}>
-                <Select.Option value="decs">Giá tăng dần</Select.Option>
-                <Select.Option value="asc">Giá giảm dần</Select.Option>
+              <Select
+                onChange={(value) => handleFilter("sort", value)}
+                placeholder="Sort by..."
+                style={{ width: "100%" }}
+              >
+                <Select.Option value="name.decs">Tên A-Z</Select.Option>
+                <Select.Option value="name.asc">Tên Z-A</Select.Option>
+                <Select.Option value="price.asc">Giá tăng dần</Select.Option>
+                <Select.Option value="price.desc">Giá giảm dần</Select.Option>
               </Select>
             </Col>
           </Row>
-          <Row gutter={[16, 16]}>{renderProductList}</Row>
+          <Spin spinning={productList.load}>
+            <Row gutter={[16, 16]}>{renderProductList}</Row>
+          </Spin>
           {productList.data.length !== productList.meta.total && (
             <Row justify="center" style={{ marginTop: 16 }}>
               <Button onClick={() => handleShowMore()}>Show more</Button>
