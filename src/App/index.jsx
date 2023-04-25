@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { ConfigProvider } from "antd";
 import jwtDecode from "jwt-decode";
+import "moment/locale/vi";
 
 import { ThemeProvider } from "styled-components";
 

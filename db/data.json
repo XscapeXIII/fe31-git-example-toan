@@ -106,5 +106,52 @@
       "id": 3,
       "name": "Xiaomi"
     }
+  ],
+  "reviews": [
+    {
+      "id": 1,
+      "rate": 5,
+      "comment": "abc",
+      "userId": 2,
+      "productId": 1,
+      "createdAt": 1682248511065,
+      "updatedAt": 1682248511066
+    },
+    {
+      "rate": 3,
+      "comment": "ádasd",
+      "userId": 1,
+      "productId": 1,
+      "createdAt": 1682435813285,
+      "updatedAt": 1682435813286,
+      "id": 2
+    },
+    {
+      "rate": 4,
+      "comment": "456",
+      "userId": 2,
+      "productId": 2,
+      "createdAt": 1682435813285,
+      "updatedAt": 1682435813286,
+      "id": 2
+    },
+    {
+      "rate": 3,
+      "comment": "zxczxczxc",
+      "userId": 2,
+      "productId": 1,
+      "createdAt": 1682439958030,
+      "updatedAt": 1682439958030,
+      "id": 3
+    },
+    {
+      "rate": 2,
+      "comment": "ko",
+      "userId": 2,
+      "productId": 1,
+      "createdAt": 1682440200917,
+      "updatedAt": 1682440200917,
+      "id": 4
+    }
   ]
 }

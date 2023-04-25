@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Form, Input } from "antd";
 import { useNavigate, Navigate } from "react-router-dom";
@@ -15,7 +15,7 @@ function LoginPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const accessToken = localStorage.getItem("accessToken");
+  const accessToken = useMemo(() => localStorage.getItem("accessToken"), []);
 
   useEffect(() => {
     if (loginData.error) {
@@ -46,7 +46,6 @@ function LoginPage() {
       })
     );
   };
-
   if (accessToken) return <Navigate to={ROUTES.USER.HOME} />;
 
   return (
@@ -84,7 +83,12 @@ function LoginPage() {
           >
             <Input.Password />
           </Form.Item>
-          <Button type="primary" htmlType="submit" block>
+          <Button
+            type="primary"
+            htmlType="submit"
+            block
+            loading={loginData.load}
+          >
             Submit
           </Button>
         </Form>
