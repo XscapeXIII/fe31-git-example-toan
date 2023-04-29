@@ -152,6 +152,15 @@
       "createdAt": 1682440200917,
       "updatedAt": 1682440200917,
       "id": 4
+    },
+    {
+      "rate": 4,
+      "comment": "ok",
+      "userId": 2,
+      "productId": 2,
+      "createdAt": 1682507427213,
+      "updatedAt": 1682507427213,
+      "id": 5
     }
   ]
 }

@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useParams, Link, generatePath } from "react-router-dom";
 import {
   Spin,
@@ -11,6 +11,7 @@ import {
   Form,
   Rate,
   Space,
+  notification,
 } from "antd";
 import moment from "moment";
 
@@ -20,11 +21,13 @@ import {
   getProductListAction,
   getReviewListAction,
   sendReviewAction,
+  addToCartAction,
 } from "../../../redux/actions";
 import { ROUTES } from "../../../constants/routes";
 import { PRODUCT_LIMIT } from "../../../constants/paging";
 
 function ProductDetailPage() {
+  const [quantity, setQuantity] = useState(1);
   const { id } = useParams();
   const [reviewForm] = Form.useForm();
 
@@ -99,6 +102,20 @@ function ProductDetailPage() {
     });
   }, [reviewList.data]);
 
+  const handleAddToCard = () => {
+    dispatch(
+      addToCartAction({
+        id: parseInt(id),
+        name: productDetail.data.name,
+        price: productDetail.data.price,
+        quantity: quantity,
+      })
+    );
+    notification.success({
+      message: "Thêm vào giỏ hàng thành công ^^!",
+    });
+  };
+
   return (
     <Spin spinning={productDetail.load}>
       <div>
@@ -112,10 +129,16 @@ function ProductDetailPage() {
         <p>{productDetail.data.price?.toLocaleString()} VND</p>
 
         <div>
-          <InputNumber />
+          <InputNumber
+            min={1}
+            value={quantity}
+            onChange={(value) => setQuantity(value)}
+          />
         </div>
         <div>
-          <Button type="primary">Add to Cart</Button>
+          <Button type="primary" onClick={() => handleAddToCard()}>
+            Add to Cart
+          </Button>
         </div>
         <div>Đánh giá sản phẩm: </div>
         <div>
